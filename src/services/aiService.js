@@ -1,8 +1,13 @@
 const { GoogleGenerativeAI } = require("@google/generative-ai");
 require('dotenv').config();
 
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
-const model = genAI.getGenerativeModel({ model: "gemini-pro" });
+const apiKey = process.env.GOOGLE_AI_API_KEY;
+if (!apiKey) {
+  console.error("WARNING: GOOGLE_AI_API_KEY not found in environment variables!");
+}
+
+const genAI = new GoogleGenerativeAI(apiKey);
+const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
 const analyzeCandles = async (symbol, timeframe, candles) => {
   try {
@@ -45,13 +50,13 @@ const analyzeCandles = async (symbol, timeframe, candles) => {
     try {
       const jsonResponse = JSON.parse(cleanedText);
       return {
-        model_name: "gemini-pro",
+        model_name: "gemini-1.5-flash",
         ...jsonResponse
       };
     } catch (e) {
       console.error("Failed to parse AI response:", text);
       return {
-        model_name: "gemini-pro",
+        model_name: "gemini-1.5-flash",
         is_doji: false,
         confidence: 0,
         reason: "Parse Error"
@@ -60,7 +65,7 @@ const analyzeCandles = async (symbol, timeframe, candles) => {
   } catch (error) {
     console.error("AI Analysis Error:", error);
     return {
-      model_name: "gemini-pro",
+      model_name: "gemini-1.5-flash",
       is_doji: false,
       confidence: 0,
       reason: "API Error"
