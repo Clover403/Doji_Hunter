@@ -12,10 +12,16 @@ const api = axios.create({
 
 // API Service methods
 export const apiService = {
+  // Generic methods
+  get: (url, params = {}) => api.get(url, { params }),
+  post: (url, data = {}) => api.post(url, data),
+
   // Health & Status
   getHealth: () => api.get('/'),
   getStatus: () => api.get('/status'),
   getConfig: () => api.get('/config'),
+  updateConfig: (data) => api.post('/config', data),
+  getOptions: () => api.get('/options'),
 
   // Dashboard
   getDashboardStats: () => api.get('/dashboard/stats'),

@@ -1,0 +1,8 @@
+{
+  "symbols": [
+    "BTCUSD"
+  ],
+  "timeframe": "M15",
+  "interval_seconds": 900,
+  "enabled": true
+}
